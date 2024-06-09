@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>匯率轉換與租屋資訊</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .exchange-widget {
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .exchange-widget h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        .exchange-widget label {
+            display: block;
+            margin-bottom: 5px;
+            color: #495057;
+        }
+        .exchange-widget input, .exchange-widget select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+        .exchange-widget button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .exchange-widget button:hover {
+            background-color: #0056b3;
+        }
+        .exchange-widget p {
+            margin: 10px 0 0 0;
+            color: #495057;
+        }
+        .rental-section {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .rental-section h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .rental-list {
+            list-style: none;
+            padding: 0;
+        }
+        .rental-list li {
+            background-color: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        .rental-list img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        .rental-list a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .rental-list a:hover {
+            text-decoration: underline;
+        }
+        .rental-list p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>匯率轉換與租屋資訊</h1>
+    </header>
+    <div class="container">
+        <div class="exchange-widget">
+            <h3>日元轉台幣匯率</h3>
+            <label for="bank">選擇銀行:</label>
+            <select id="bank">
+                {% for bank, rate in bank_rates.items() %}
+                <option value="{{ rate }}">{{ bank }} ({{ rate }})</option>
+                {% endfor %}
+            </select>
+            <input type="number" id="yen" placeholder="輸入日元金額">
+            <button onclick="convert()">轉換</button>
+            <p id="result"></p>
+        </div>
+    </div>
+    <div class="rental-section">
+        <h1>租屋資訊</h1>
+        <ul class="rental-list">
+            {% for site in rental_sites %}
+                <li>
+                    <div>
+                        <a href="{{ site.url }}" target="_blank">{{ site.name }}</a>
+                        <p>{{ site.description }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script>
+        function convert() {
+            var yen = document.getElementById('yen').value;
+            var rate = document.getElementById('bank').value;
+            var twd = yen * rate;
+            document.getElementById('result').innerText = '台幣: ' + twd.toFixed(2);
+        }
+    </script>
+</body>
+</html>
