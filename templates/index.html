@@ -41,7 +41,7 @@
             color: #495057;
         }
         .exchange-widget input, .exchange-widget select {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -65,13 +65,21 @@
         }
         .rental-section {
             width: 80%;
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 1200px;
+            margin: 40px auto;
         }
         .rental-section h1 {
             text-align: center;
             color: #007bff;
             margin-bottom: 20px;
+        }
+        .rental-columns {
+            display: flex;
+            justify-content: space-between;
+        }
+        .rental-column {
+            flex: 1;
+            margin: 0 10px;
         }
         .rental-list {
             list-style: none;
@@ -87,11 +95,9 @@
             align-items: center;
         }
         .rental-list img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-right: 15px;
+            width: 130px;
+            height: 100px;
+            margin-right: 20px;
         }
         .rental-list a {
             text-decoration: none;
@@ -105,6 +111,127 @@
         }
         .rental-list p {
             margin: 0;
+        }
+        .rental-section {
+            width: 80%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+        .rental-section h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .row img {
+            width: 500px;
+            height: 450px;
+            margin-right: 20px;
+        }
+        .card {
+            width: 680px;
+            height: 400px;
+            perspective: 1000px;
+        }
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+        .card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: left;
+        }
+        .card-front {
+            background-color: #fff;
+        }
+        .card-back {
+            background-color: #007bff;
+            color: white;
+            transform: rotateY(180deg);
+        }
+        .card-front h3, .card-back h3 {
+            margin-right: 40px;
+        }
+        .card-front p, .card-back p {
+            margin: 30px 0;
+        }
+
+        .virtual-assistant {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+        }
+        .chat-box {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            background-color: white;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .chat-body {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        .chat-input {
+            display: flex;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #ced4da;
+        }
+        .chat-input button {
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -126,25 +253,145 @@
             <p id="result"></p>
         </div>
     </div>
-    <div class="rental-section">
+    <header>
         <h1>租屋資訊</h1>
-        <ul class="rental-list">
-            {% for site in rental_sites %}
-                <li>
-                    <div>
-                        <a href="{{ site.url }}" target="_blank">{{ site.name }}</a>
-                        <p>{{ site.description }}</p>
+    </header>
+    <div class="rental-section">
+        <div class="rental-columns">
+            <div class="rental-column">
+                <ul class="rental-list">
+                    {% for site in rental_sites[:3] %}
+                        <li>
+                            <img src="{{ site.img }}" alt="{{ site.name }}">
+                            <div>
+                                <a href="{{ site.url }}" target="_blank">{{ site.name }}</a>
+                                <p>{{ site.description }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="rental-column">
+                <ul class="rental-list">
+                    {% for site in rental_sites[3:6] %}
+                        <li>
+                            <img src="{{ site.img }}" alt="{{ site.name }}">
+                            <div>
+                                <a href="{{ site.url }}" target="_blank">{{ site.name }}</a>
+                                <p>{{ site.description }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="rental-column">
+                <ul class="rental-list">
+                    {% for site in rental_sites[6:9] %}
+                        <li>
+                            <img src="{{ site.img }}" alt="{{ site.name }}">
+                            <div>
+                                <a href="{{ site.url }}" target="_blank">{{ site.name }}</a>
+                                <p>{{ site.description }}</p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <header>
+        <h1>租屋流程與注意事項</h1>
+    </header>
+    <div class="rental-section">
+        <div class="row">
+            <img src="{{ url_for('static', filename='1.png') }}" alt="租屋相關圖片">
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h3>租屋流程</h3>
+                        <p>1. 尋找理想房源<br>2. 實地或海外看房<br>3. 提出申請、審查<br>4. 簽約合同<br>5. 取得鑰匙</p>
                     </div>
-                </li>
-            {% endfor %}
-        </ul>
+                    <div class="card-back">
+                        <h3>詳細內容</h3>
+                        <p>1. 尋找理想房源：決定想居住的城市和地區，並考慮單位格局。<br>2. 實地或海外看房：聘用房屋仲介去為你物色正在出租的房間，少數提供海外視訊看房。<br>3. 提出申請、審查：填寫租屋申請書（賃貸入居申込書），給租客作出審查，決定是否願意出租。<br>4. 簽約合同：審查通過後，說明重要事項，簽約租屋合同（賃貸借契約書），並支付初期費用。<br>5. 取得鑰匙：與房東的仲介約時間簽約並獲得房間鑰匙。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <img src="{{ url_for('static', filename='2.png') }}" alt="租屋相關圖片">
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h3>注意事項</h3>
+                        <p>1. 選擇適合租屋地點<br>2. 費用問題<br>3. 申請審查的文件和資料<br>4. 租屋簽約問題</p>
+                    </div>
+                    <div class="card-back">
+                        <h3>詳細內容</h3>
+                        <p>1. 選擇適合租屋地點：以自己需求條件和方便性，去選擇合適的租屋地點。<br>2. 費用問題：計算能負擔的大概月租金額，有租金、初期費用等。<br>3. 申請審查的文件和資料：確認需繳交的文件和個人資料。<br>4. 租屋簽約問題：仔細了解租屋合同(賃貸借契約書)，確保合同沒有問題。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="virtual-assistant" onclick="toggleChat()">
+        💬
+    </div>
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">小幫手</div>
+        <div class="chat-body" id="chatBody">
+            <p>您好，我是您的虛擬小幫手！有什麼我可以幫您的嗎？</p>
+            <p>您可以直接輸入以下問題:</p>
+            <p>1.日本需要用到印章嗎？</p>
+            <p>2.日本租屋的初期費用包含哪些？</p>
+            <p>3.我可以只租短期而不是長期租屋嗎？</p>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="輸入您的問題...">
+            <button onclick="sendMessage()">發送</button>
+        </div>
     </div>
     <script>
         function convert() {
             var yen = document.getElementById('yen').value;
             var rate = document.getElementById('bank').value;
-            var twd = yen * rate;
-            document.getElementById('result').innerText = '台幣: ' + twd.toFixed(2);
+            var result = yen * rate;
+            document.getElementById('result').innerText = '轉換結果: ' + result.toFixed(2) + ' 台幣';
+        }
+
+        function toggleChat() {
+            var chatBox = document.getElementById('chatBox');
+            chatBox.style.display = chatBox.style.display === 'none' || chatBox.style.display === '' ? 'flex' : 'none';
+        }
+
+        function sendMessage() {
+            var chatInput = document.getElementById('chatInput');
+            var message = chatInput.value.trim();
+            if (message) {
+                var chatBody = document.getElementById('chatBody');
+                var userMessage = document.createElement('p');
+                userMessage.innerText = '我: ' + message;
+                chatBody.appendChild(userMessage);
+                chatInput.value = '';
+
+                var botResponse = document.createElement('p');
+                botResponse.innerText = '小幫手: ' + getBotResponse(message);
+                chatBody.appendChild(botResponse);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+        }
+
+        function getBotResponse(message) {
+            switch (message) {
+                case '日本需要用到印章嗎？':
+                    return '通常，有些場面接受使用簽名代替印章。然而，簽署正式文件可能仍然需要一顆印章，例如貸款或簽署買賣契約。此外，銀行和租屋通常也會要求使用印章。';
+                case '日本租屋的初期費用包含哪些？':
+                    return '日本租屋禮金、日本租屋敷金、日本租屋仲介手續費、日本租屋保證人費用、火災保險費、清潔費、換鎖費、更新費用';
+                case '我可以只租短期而不是長期租屋嗎？':
+                    return '如果您希望租約只有短暫期間（例如數個月、半年或一年），也可以找專門提供短期租屋的出租公寓。這類型公寓通常很像民宿，附帶家具家電、Wi-Fi、有水電瓦斯（費用可能包含在租金內或另外收費）。例如，在Real Estate Japan搜尋物件的搜尋項目點選「可短期租屋」 即可找到許多允許短期住宿的房源，或者GaijinPot Apartments可短期租屋已將允許短期住宿的物件獨立列出。';
+                default:
+                    return '抱歉，我不太明白您的問題。可以試試其他問題。';
+            }
         }
     </script>
 </body>

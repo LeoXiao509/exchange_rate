@@ -1,3 +1,4 @@
+#app.py
 import requests
 from bs4 import BeautifulSoup
 from flask import Flask, render_template, request, redirect, url_for
@@ -13,46 +14,55 @@ RENTAL_SITES = [
     {
         'name': 'Suumo',
         'url': 'https://suumo.jp/',
+        'img': 'static/suumo.png',
         'description': '提供日本各地的租屋資訊，有多語言支援(Google翻譯)。'
     },
     {
         'name': 'Homes',
         'url': 'https://www.homes.co.jp/',
+        'img': 'static/Lifull homes.jpg',
         'description': '提供詳細的房屋租賃資訊和多種搜索選項，支持多語言服務。'
     },
     {
         'name': 'Leopalace21',
         'url': 'https://www.leopalace21.com/tw',
+        'img': 'static/Leopalace21.jpg',
         'description': '專門為國際學生和外國人提供短期和長期的租賃服務，提供多語言服務。'
     },
     {
         'name': 'GaijinPot Apartments',
+        'img': 'static/GaijinPot Apartments.jpg',
         'url': 'https://apartments.gaijinpot.com/zh_TW/rent',
         'description': '專門為外國人提供的租屋資訊網站，涵蓋日本主要城市的房屋租賃，提供了詳細的資訊。'
     },
     {
         'name': 'Real Estate Japan',
         'url': 'https://realestate.co.jp/zh_CN',
+        'img': 'static/Real Estate Japan.jpg',
         'description': '提供針對外國人的租屋和購房資訊，也有英文版網站，支持多種搜索選項。'
     },
     {
         'name': 'Sakura House',
         'url': 'https://www.sakura-house.com/tw/',
+        'img': 'static/Sakura House.jpg',
         'description': '專門為外國人提供租屋服務，包含短期和長期，也有多語言服務。'
     },
     {
         'name': 'Tokyo Room Finder',
         'url': 'https://blog.tokyoroomfinder.com/',
+        'img': 'static/Tokyo Room Finder.png',
         'description': '提供東京地區的租屋資訊，是英文版網站，有多語言支援(Google翻譯)。'
     },
     {
         'name': 'Village House',
         'url': 'https://www.villagehouse.jp/',
+        'img': 'static/Village House.png',
         'description': '提供日本全國範圍內的低價租屋資訊，有英文版網站，也有多語言支援(Google翻譯)。'
     },
     {
         'name': 'Apamanshop',
         'url': 'https://www.apamanshop.com/',
+        'img': 'static/Apamanshop.jpg',
         'description': '提供日本各地的租屋資訊，有英文版、中文版網站，也有多語言支援(Google翻譯)。'
     }
 ]
@@ -121,6 +131,12 @@ def index():
 def open_browser():
     webbrowser.open_new("http://127.0.0.1:5000")
 
+@app.route('/get_answer', methods=['POST'])
+def get_answer():
+    user_message = request.json.get('message')
+    # 這裡可以添加智能回答邏輯，例如調用聊天機器人API
+    answer = "這是一個示範回應。"
+    return jsonify({'answer': answer})
 
 if __name__ == '__main__':
     app.run(debug=True)
