@@ -12,10 +12,10 @@
             padding: 0;
         }
         header {
-            background-color: #007bff;
             color: white;
             padding: 20px;
             text-align: center;
+            font-size: 23px;
         }
         .container {
             display: flex;
@@ -24,7 +24,7 @@
             padding: 20px;
         }
         .exchange-widget {
-            width: 300px;
+            width: 500px;
             padding: 20px;
             background-color: white;
             border-radius: 8px;
@@ -236,7 +236,7 @@
     </style>
 </head>
 <body>
-    <header>
+    <header style="background-color: #007bff;">
         <h1>匯率轉換與租屋資訊</h1>
     </header>
     <div class="container">
@@ -253,10 +253,8 @@
             <p id="result"></p>
         </div>
     </div>
-    <header>
-        <h1>租屋資訊</h1>
-    </header>
     <div class="rental-section">
+        <h1 style="color: #007bff;font-size: 40px;">🏠租屋資訊</h1>
         <div class="rental-columns">
             <div class="rental-column">
                 <ul class="rental-list">
@@ -299,10 +297,8 @@
             </div>
         </div>
     </div>
-    <header>
-        <h1>租屋流程與注意事項</h1>
-    </header>
     <div class="rental-section">
+        <h1 style="color: #007bff;font-size: 40px;">⚠️租屋流程與注意事項</h1>
         <div class="row">
             <img src="{{ url_for('static', filename='1.png') }}" alt="租屋相關圖片">
             <div class="card">
