@@ -1,10 +1,10 @@
-#app.py
 import requests
 from bs4 import BeautifulSoup
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, jsonify
 import logging
 import webbrowser
 from threading import Timer
+
 app = Flask(__name__)
 
 logging.basicConfig(level=logging.INFO)
@@ -139,4 +139,5 @@ def get_answer():
     return jsonify({'answer': answer})
 
 if __name__ == '__main__':
+    Timer(1, open_browser).start()
     app.run(debug=True)
